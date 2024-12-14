@@ -1,0 +1,6 @@
+spring:
+  application:
+    name: spring6webapp
+  h2:
+    console:
+      enabled: true
