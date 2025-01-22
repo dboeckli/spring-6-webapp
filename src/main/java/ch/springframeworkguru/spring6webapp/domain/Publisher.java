@@ -3,6 +3,7 @@ package ch.springframeworkguru.spring6webapp.domain;
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
+import lombok.ToString;
 
 import java.util.HashSet;
 import java.util.Objects;
@@ -10,6 +11,7 @@ import java.util.Set;
 
 @Getter
 @Setter
+@ToString
 @Entity
 public class Publisher {
 
@@ -28,6 +30,7 @@ public class Publisher {
     private int zip;
 
     @OneToMany(mappedBy = "publisher")
+    @ToString.Exclude
     private Set<Book> books = new HashSet<>();
 
     @Override
@@ -43,15 +46,4 @@ public class Publisher {
         return Objects.hashCode(getId());
     }
 
-    @Override
-    public String toString() {
-        return "Publisher{" +
-                "id=" + id +
-                ", publisherName='" + publisherName + '\'' +
-                ", address='" + address + '\'' +
-                ", city='" + city + '\'' +
-                ", state='" + state + '\'' +
-                ", zip='" + zip + '\'' +
-                '}';
-    }
 }

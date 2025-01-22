@@ -3,6 +3,7 @@ package ch.springframeworkguru.spring6webapp.domain;
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
+import lombok.ToString;
 
 import java.util.HashSet;
 import java.util.Objects;
@@ -10,6 +11,7 @@ import java.util.Set;
 
 @Getter
 @Setter
+@ToString
 @Entity
 public class Author {
 
@@ -22,6 +24,7 @@ public class Author {
     private String lastName;
 
     @ManyToMany(mappedBy = "authors")
+    @ToString.Exclude
     private Set<Book> books = new HashSet<>();
 
     @Override
@@ -37,13 +40,5 @@ public class Author {
         return Objects.hashCode(getId());
     }
 
-    @Override
-    public String toString() {
-        return "Author{" +
-                "id=" + id +
-                ", firstName='" + firstName + '\'' +
-                ", lastName='" + lastName + '\'' +
-                ", books=" + books +
-                '}';
-    }
+
 }
