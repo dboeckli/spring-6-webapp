@@ -3,6 +3,7 @@ package ch.springframeworkguru.spring6webapp.domain;
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
+import lombok.ToString;
 
 import java.util.HashSet;
 import java.util.Objects;
@@ -10,6 +11,7 @@ import java.util.Set;
 
 @Getter
 @Setter
+@ToString
 @Entity
 public class Book {
 
@@ -24,6 +26,7 @@ public class Book {
     @ManyToMany
     @JoinTable(name = "author_book", joinColumns = @JoinColumn(name = "book_id"),
             inverseJoinColumns = @JoinColumn(name = "author_id"))
+    @ToString.Exclude
     private Set<Author> authors = new HashSet<>();
 
     @ManyToOne
@@ -42,13 +45,4 @@ public class Book {
         return Objects.hashCode(getId());
     }
 
-    @Override
-    public String toString() {
-        return "Book{" +
-                "id=" + id +
-                ", title='" + title + '\'' +
-                ", isbn='" + isbn + '\'' +
-                ", authors=" + authors +
-                '}';
-    }
 }
