@@ -70,9 +70,9 @@ public class BootstrapData implements CommandLineRunner {
         bookRepository.save(dddSaved);
         bookRepository.save(noEJBSaved);
 
-        System.out.println("In Bootstrap");
-        System.out.println("Author Count: " + authorRepository.count());
-        System.out.println("Book Count: " + bookRepository.count());
-        System.out.println("Publisher Count: " + publisherRepository.count());
+        log.info("In Bootstrap");
+        log.info("Author Count: " + authorRepository.count());
+        log.info("Book Count: " + bookRepository.count());
+        log.info("Publisher Count: " + publisherRepository.count());
     }
 }
