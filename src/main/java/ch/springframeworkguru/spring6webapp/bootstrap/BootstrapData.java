@@ -6,26 +6,19 @@ import ch.springframeworkguru.spring6webapp.domain.Publisher;
 import ch.springframeworkguru.spring6webapp.repo.AuthorRepository;
 import ch.springframeworkguru.spring6webapp.repo.BookRepository;
 import ch.springframeworkguru.spring6webapp.repo.PublisherRepository;
+import lombok.RequiredArgsConstructor;
 import lombok.extern.java.Log;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.stereotype.Component;
 
 @Component
+@RequiredArgsConstructor
 @Log
 public class BootstrapData implements CommandLineRunner {
 
     private final AuthorRepository authorRepository;
     private final BookRepository bookRepository;
     private final PublisherRepository publisherRepository;
-
-
-    public BootstrapData(AuthorRepository authorRepository,
-                         BookRepository bookRepository,
-                         PublisherRepository publisherRepository) {
-        this.authorRepository = authorRepository;
-        this.bookRepository = bookRepository;
-        this.publisherRepository = publisherRepository;
-    }
 
     @Override
     public void run(String... args) {
