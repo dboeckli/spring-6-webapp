@@ -41,7 +41,7 @@
 		<logbook.version>3.12.1</logbook.version>
 		<logstash-logback.version>8.1</logstash-logback.version>
 
-        <webjars-bootstrap.version>5.3.6</webjars-bootstrap.version>
+        <webjars-bootstrap.version>5.3.7</webjars-bootstrap.version>
         <webjars-locator.version>0.52</webjars-locator.version>
 
 		<!-- Sonar -->
