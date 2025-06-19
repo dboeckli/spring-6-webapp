@@ -1,7 +1,7 @@
 # Spring 6 Web Application
 
 ## Overview
-This project is a Spring Boot 3.4.0 web application. It serves as a template or starting point for building web applications using the Spring Framework.
+This project is a Spring Boot 3.5.0 web application. It serves as a template or starting point for building web applications using the Spring Framework.
 
 ## Prerequisites
 - Java 21
