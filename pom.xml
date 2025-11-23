@@ -5,7 +5,7 @@
     <parent>
         <groupId>org.springframework.boot</groupId>
         <artifactId>spring-boot-starter-parent</artifactId>
-        <version>3.5.7</version>
+        <version>4.0.0</version>
         <relativePath/> <!-- lookup parent from repository -->
     </parent>
 
@@ -42,7 +42,6 @@
         <docker.image.tag>development</docker.image.tag> <!-- for feature branches -->
         <docker.repo>local</docker.repo>
 
-        <logbook.version>3.12.3</logbook.version>
         <logstash-logback.version>9.0</logstash-logback.version>
         <editorconfig-maven-plugin.version>0.1.3</editorconfig-maven-plugin.version>
         <helm.plugin.version>6.17.0</helm.plugin.version>
@@ -51,7 +50,6 @@
         <merge-yaml-plugin.version>1.4</merge-yaml-plugin.version>
 
         <webjars-bootstrap.version>5.3.8</webjars-bootstrap.version>
-        <webjars-locator.version>0.52</webjars-locator.version>
 
 		<!-- Sonar -->
         <sonar-maven-plugin.version>5.3.0.6276</sonar-maven-plugin.version>
@@ -59,9 +57,6 @@
         <sonar.dynamicAnalysis>reuseReports</sonar.dynamicAnalysis>
         <sonar.language>java</sonar.language>
         <jacoco.version>0.8.14</jacoco.version>
-
-		<!--suppress UnresolvedMavenProperty -->
-        <buildNumber>${git.commit.id.abbrev}</buildNumber>
     </properties>
 
     <repositories>
@@ -138,21 +133,24 @@
     <dependencies>
         <dependency>
             <groupId>org.springframework.boot</groupId>
-            <artifactId>spring-boot-starter-data-jpa</artifactId>
+            <artifactId>spring-boot-starter-webmvc</artifactId>
         </dependency>
         <dependency>
             <groupId>org.springframework.boot</groupId>
-            <artifactId>spring-boot-starter-web</artifactId>
+            <artifactId>spring-boot-starter-data-jpa</artifactId>
         </dependency>
         <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-thymeleaf</artifactId>
         </dependency>
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-jackson</artifactId>
+        </dependency>
         <!-- webjars -->
         <dependency>
             <groupId>org.webjars</groupId>
-            <artifactId>webjars-locator</artifactId>
-            <version>${webjars-locator.version}</version>
+            <artifactId>webjars-locator-lite</artifactId>
         </dependency>
         <dependency>
             <groupId>org.webjars</groupId>
@@ -167,15 +165,20 @@
         </dependency>
 
         <dependency>
-            <groupId>org.zalando</groupId>
-            <artifactId>logbook-spring-boot-starter</artifactId>
-            <version>${logbook.version}</version>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-micrometer-metrics</artifactId>
         </dependency>
+
         <dependency>
-            <groupId>org.zalando</groupId>
-            <artifactId>logbook-logstash</artifactId>
-            <version>${logbook.version}</version>
+            <groupId>io.micrometer</groupId>
+            <artifactId>micrometer-registry-prometheus</artifactId>
         </dependency>
+
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-opentelemetry</artifactId>
+        </dependency>
+
         <dependency>
             <groupId>net.logstash.logback</groupId>
             <artifactId>logstash-logback-encoder</artifactId>
@@ -188,13 +191,40 @@
             <scope>runtime</scope>
         </dependency>
         <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-h2console</artifactId>
+        </dependency>
+
+        <dependency>
             <groupId>org.projectlombok</groupId>
             <artifactId>lombok</artifactId>
             <optional>true</optional>
         </dependency>
+
+        <!-- test dependencies -->
         <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-test</artifactId>
+            <scope>test</scope>
+        </dependency>
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-webmvc-test</artifactId>
+            <scope>test</scope>
+        </dependency>
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-jackson-test</artifactId>
+            <scope>test</scope>
+        </dependency>
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-opentelemetry-test</artifactId>
+            <scope>test</scope>
+        </dependency>
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-restclient-test</artifactId>
             <scope>test</scope>
         </dependency>
 
@@ -202,14 +232,17 @@
         <dependency>
             <groupId>org.seleniumhq.selenium</groupId>
             <artifactId>selenium-java</artifactId>
+            <scope>test</scope>
         </dependency>
         <dependency>
             <groupId>org.seleniumhq.selenium</groupId>
             <artifactId>selenium-api</artifactId>
+            <scope>test</scope>
         </dependency>
         <dependency>
             <groupId>org.seleniumhq.selenium</groupId>
             <artifactId>selenium-ie-driver</artifactId>
+            <scope>test</scope>
         </dependency>
     </dependencies>
 
@@ -225,7 +258,7 @@
                                 <addDefaultImplementationEntries>true</addDefaultImplementationEntries>
                                 <addClasspath>true</addClasspath>
                                 <classpathPrefix>lib/</classpathPrefix>
-								<!-- Force the use of '-SNAPSHOT' version naming -->
+                                <!-- Force the use of '-SNAPSHOT' version naming -->
                                 <useUniqueVersions>false</useUniqueVersions>
                             </manifest>
                             <manifestEntries>
@@ -233,7 +266,8 @@
                                 <groupId>${project.groupId}</groupId>
                                 <artifactId>${project.artifactId}</artifactId>
                                 <Implementation-Version>${project.version}</Implementation-Version>
-                                <git-SHA-1>${buildNumber}</git-SHA-1>
+                                <!--suppress UnresolvedMavenProperty. git.commit.id.abbrev is set by git git-commit-id-maven-plugin -->
+                                <git-SHA-1>${git.commit.id.abbrev}</git-SHA-1>
                                 <source-url>${project.scm.url}</source-url>
                                 <BuildDate>${maven.build.timestamp}</BuildDate>
                                 <Built-By>${user.name}</Built-By>
@@ -316,7 +350,6 @@
                         <id>create-bill-of-materials</id>
                         <phase>package</phase>
                         <goals>
-                            <goal>makeAggregateBom</goal>
                             <goal>makeBom</goal>
                         </goals>
                     </execution>
@@ -556,14 +589,6 @@
                         <goals>
                             <goal>build-info</goal>
                         </goals>
-                        <configuration>
-                            <additionalProperties>
-                                <mavenUser>${user.name}</mavenUser>
-                                <javaVersion>${java.version}</javaVersion>
-                                <javaVendor>${java.vendor}</javaVendor>
-                                <commit-id>${buildNumber}</commit-id>
-                            </additionalProperties>
-                        </configuration>
                     </execution>
 
                     <execution>

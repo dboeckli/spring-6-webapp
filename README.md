@@ -1,7 +1,7 @@
 # Spring 6 Web Application
 
 ## Overview
-This project is a Spring Boot 3.5.0 web application. It serves as a template or starting point for building web applications using the Spring Framework.
+This project is a Spring Boot 4.0.0 web application. It serves as a template or starting point for building web applications using the Spring Framework.
 
 ## Prerequisites
 - Java 21
@@ -14,6 +14,8 @@ The application provides two main endpoints:
 
 - `http://localhost:30080/authors` - Displays information about authors
 - `http://localhost:30080/books` - Displays information about books
+
+- `http://localhost:8080/h2-console` - h2 console
 
 ## Deployment with Helm
 
