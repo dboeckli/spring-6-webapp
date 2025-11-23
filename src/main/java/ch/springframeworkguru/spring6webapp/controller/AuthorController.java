@@ -20,6 +20,4 @@ public class AuthorController {
         model.addAttribute("authors", authorService.getAuthors());
         return "authors";
     }
-
-
 }

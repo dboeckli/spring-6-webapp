@@ -15,6 +15,8 @@ The application provides two main endpoints:
 - `http://localhost:30080/authors` - Displays information about authors
 - `http://localhost:30080/books` - Displays information about books
 
+- `http://localhost:8080/h2-console` - h2 console
+
 ## Deployment with Helm
 
 Be aware that we are using a different namespace here (not default).
