@@ -1,4 +1,4 @@
-package ch.springframeworkguru.spring6webapp.bootstrap;
+package ch.springframeworkguru.spring6webapp.webjar;
 
 import ch.springframeworkguru.spring6webapp.domain.Author;
 import ch.springframeworkguru.spring6webapp.domain.Book;
