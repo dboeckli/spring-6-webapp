@@ -9,10 +9,11 @@ import org.springframework.stereotype.Service;
 @RequiredArgsConstructor
 public class AuthorServiceImpl implements AuthorService {
 
-    private final AuthorRepository authorRepository;
+	private final AuthorRepository authorRepository;
 
-    @Override
-    public Iterable<Author> getAuthors() {
-        return authorRepository.findAll();
-    }
+	@Override
+	public Iterable<Author> getAuthors() {
+		return authorRepository.findAll();
+	}
+
 }

@@ -14,15 +14,17 @@ import static org.assertj.core.api.Assertions.assertThat;
 @AutoConfigureTestRestTemplate
 class H2ConsoleIntegrationTest {
 
-    @Test
-    void h2ConsoleShouldBeAccessible(@Autowired TestRestTemplate testRestTemplate) {
-        // Wir rufen die H2-Console URL auf (mit abschließendem Slash, um Redirects zu vermeiden)
-        ResponseEntity<String> response = testRestTemplate.getForEntity("/h2-console/", String.class);
+	@Test
+	void h2ConsoleShouldBeAccessible(@Autowired TestRestTemplate testRestTemplate) {
+		// Wir rufen die H2-Console URL auf (mit abschließendem Slash, um Redirects zu
+		// vermeiden)
+		ResponseEntity<String> response = testRestTemplate.getForEntity("/h2-console/", String.class);
 
-        // Prüfen, ob die Seite erreichbar ist (Status 200)
-        assertThat(response.getStatusCode()).isEqualTo(HttpStatus.OK);
+		// Prüfen, ob die Seite erreichbar ist (Status 200)
+		assertThat(response.getStatusCode()).isEqualTo(HttpStatus.OK);
 
-        // Prüfen, ob es wirklich die H2 Console ist (anhand des Titels im HTML)
-        assertThat(response.getBody()).contains("<title>H2 Console</title>");
-    }
+		// Prüfen, ob es wirklich die H2 Console ist (anhand des Titels im HTML)
+		assertThat(response.getBody()).contains("<title>H2 Console</title>");
+	}
+
 }

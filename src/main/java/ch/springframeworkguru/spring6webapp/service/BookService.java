@@ -4,6 +4,6 @@ import ch.springframeworkguru.spring6webapp.domain.Book;
 
 public interface BookService {
 
-    Iterable<Book> getBooks();
+	Iterable<Book> getBooks();
 
 }

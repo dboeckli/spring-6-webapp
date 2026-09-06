@@ -30,62 +30,60 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 @DirtiesContext(classMode = DirtiesContext.ClassMode.AFTER_CLASS)
 class BookListPageIT {
 
-    @LocalServerPort
-    private int port;
+	@LocalServerPort
+	private int port;
 
-    private WebDriver webDriver;
+	private WebDriver webDriver;
 
-    WebDriverWait wait;
+	WebDriverWait wait;
 
-    @BeforeEach
-    public void setUp() {
-        ChromeOptions options = new ChromeOptions();
-        options.addArguments("--headless");  // Run in headless mode
-        webDriver = new ChromeDriver(options);
-        wait = new WebDriverWait(webDriver, Duration.ofSeconds(10));
-    }
+	@BeforeEach
+	public void setUp() {
+		ChromeOptions options = new ChromeOptions();
+		options.addArguments("--headless"); // Run in headless mode
+		webDriver = new ChromeDriver(options);
+		wait = new WebDriverWait(webDriver, Duration.ofSeconds(10));
+	}
 
-    @AfterEach
-    public void tearDown() {
-        if (webDriver != null) {
-            webDriver.quit();
-        }
-    }
+	@AfterEach
+	public void tearDown() {
+		if (webDriver != null) {
+			webDriver.quit();
+		}
+	}
 
-    @Test
-    void testBeerListPageLoads() {
-        webDriver.get("http://localhost:" + port + "/books");
-        waitForPageLoad();
+	@Test
+	void testBeerListPageLoads() {
+		webDriver.get("http://localhost:" + port + "/books");
+		waitForPageLoad();
 
-        // Wait for the table to be present
-        WebElement bookTable = wait.until(ExpectedConditions.presenceOfElementLocated(By.id("bookTable")));
-        List<WebElement> bookRows = bookTable.findElements(By.cssSelector("tbody tr"));
+		// Wait for the table to be present
+		WebElement bookTable = wait.until(ExpectedConditions.presenceOfElementLocated(By.id("bookTable")));
+		List<WebElement> bookRows = bookTable.findElements(By.cssSelector("tbody tr"));
 
-        List<Book> books = new ArrayList<>();
-        for (WebElement row : bookRows) {
-            String id = row.findElement(By.cssSelector("[id^='bookId-']")).getText();
-            String title = wait.until(ExpectedConditions.presenceOfElementLocated(By.id("bookTitle-" + id))).getText();
-            String publisher = wait.until(ExpectedConditions.presenceOfElementLocated(By.id("bookPublisher-" + id))).getText();
-            books.add(Book.builder()
-                .id(Long.parseLong(id))
-                    .title(title)
-                    .publisher(Publisher.builder()
-                        .publisherName(publisher)
-                        .build())
-                .build());
-        }
-        
-        assertAll(
-            () -> assertEquals("Book List", webDriver.getTitle()),
-            () -> assertEquals(2, bookRows.size()),
-            () -> assertEquals(new HashSet<>(Arrays.asList("Domain Driven Design", "J2EE Development without EJB")),
-                               books.stream().map(Book::getTitle).collect(Collectors.toSet()))
-        );
-    }
+		List<Book> books = new ArrayList<>();
+		for (WebElement row : bookRows) {
+			String id = row.findElement(By.cssSelector("[id^='bookId-']")).getText();
+			String title = wait.until(ExpectedConditions.presenceOfElementLocated(By.id("bookTitle-" + id))).getText();
+			String publisher = wait.until(ExpectedConditions.presenceOfElementLocated(By.id("bookPublisher-" + id)))
+				.getText();
+			books.add(Book.builder()
+				.id(Long.parseLong(id))
+				.title(title)
+				.publisher(Publisher.builder().publisherName(publisher).build())
+				.build());
+		}
 
-    private void waitForPageLoad() {
-        WebDriverWait pageWait = new WebDriverWait(webDriver, Duration.ofSeconds(30));
-        pageWait.until((ExpectedCondition<Boolean>) wd ->
-            Objects.equals(((JavascriptExecutor) Objects.requireNonNull(wd)).executeScript("return document.readyState"), "complete"));
-    }
+		assertAll(() -> assertEquals("Book List", webDriver.getTitle()), () -> assertEquals(2, bookRows.size()),
+				() -> assertEquals(new HashSet<>(Arrays.asList("Domain Driven Design", "J2EE Development without EJB")),
+						books.stream().map(Book::getTitle).collect(Collectors.toSet())));
+	}
+
+	private void waitForPageLoad() {
+		WebDriverWait pageWait = new WebDriverWait(webDriver, Duration.ofSeconds(30));
+		pageWait.until((ExpectedCondition<Boolean>) wd -> Objects.equals(
+				((JavascriptExecutor) Objects.requireNonNull(wd)).executeScript("return document.readyState"),
+				"complete"));
+	}
+
 }
