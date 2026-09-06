@@ -12,12 +12,13 @@ import org.springframework.web.bind.annotation.RequestMapping;
 @Slf4j
 public class BookController {
 
-    private final BookService bookService;
+	private final BookService bookService;
 
-    @RequestMapping("/books")
-    public String getBooks(Model model) {
-        log.info("Books requested");
-        model.addAttribute("books", bookService.getBooks());
-        return "books";
-    }
+	@RequestMapping("/books")
+	public String getBooks(Model model) {
+		log.info("Books requested");
+		model.addAttribute("books", bookService.getBooks());
+		return "books";
+	}
+
 }

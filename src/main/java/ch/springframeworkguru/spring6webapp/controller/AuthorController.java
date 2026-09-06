@@ -12,12 +12,13 @@ import org.springframework.web.bind.annotation.RequestMapping;
 @Slf4j
 public class AuthorController {
 
-    private final AuthorService authorService;
+	private final AuthorService authorService;
 
-    @RequestMapping("/authors")
-    public String getAuthors(Model model) {
-        log.info("Authors requested");
-        model.addAttribute("authors", authorService.getAuthors());
-        return "authors";
-    }
+	@RequestMapping("/authors")
+	public String getAuthors(Model model) {
+		log.info("Authors requested");
+		model.addAttribute("authors", authorService.getAuthors());
+		return "authors";
+	}
+
 }

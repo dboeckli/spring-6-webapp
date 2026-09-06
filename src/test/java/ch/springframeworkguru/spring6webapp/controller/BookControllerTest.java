@@ -14,15 +14,16 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 @SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
 class BookControllerTest {
 
-    @Autowired
-    BookController controller;
+	@Autowired
+	BookController controller;
 
-    @Test
-    void testGetBooks() {
-        Model model = new ExtendedModelMap();
-        String viewName = controller.getBooks(model);
-        assertEquals("books", viewName);
-        List<Book> bookList = (List<Book>)model.getAttribute("books");
-        assertEquals(2, bookList.size());
-    }
+	@Test
+	void testGetBooks() {
+		Model model = new ExtendedModelMap();
+		String viewName = controller.getBooks(model);
+		assertEquals("books", viewName);
+		List<Book> bookList = (List<Book>) model.getAttribute("books");
+		assertEquals(2, bookList.size());
+	}
+
 }

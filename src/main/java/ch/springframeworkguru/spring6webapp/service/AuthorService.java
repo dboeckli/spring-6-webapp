@@ -4,6 +4,6 @@ import ch.springframeworkguru.spring6webapp.domain.Author;
 
 public interface AuthorService {
 
-    Iterable<Author> getAuthors();
+	Iterable<Author> getAuthors();
 
 }
