@@ -2,12 +2,34 @@
 
 ## Overview
 
-This project is a Spring Boot 4.0.0 web application. It serves as a template or starting point for building web applications using the Spring Framework
+This project is a Spring Boot 4 web application. It serves as a template or starting point for building web applications using the Spring Framework
+
+## Architecture Overview
+
+```mermaid
+graph LR
+    Client(["💻 Browser"])
+
+    subgraph WebApp ["spring-6-webapp (Spring Boot 4)"]
+        MVC["Spring MVC + Thymeleaf UI\n:8080 / NodePort 30080"]
+        Service["Business Layer"]
+        Repository["Spring Data JPA"]
+    end
+
+    subgraph Database ["Database"]
+        H2[("H2\nIn-Memory")]
+    end
+
+    Client <-->|"HTTP"| MVC
+    MVC --> Service
+    Service --> Repository
+    Repository <--> H2
+```
 
 ## Prerequisites
 
-- Java 21
-- Maven 3.x
+- Java 25
+- Maven Wrapper (included)
 
 ## Available Endpoints via browser
 
@@ -38,7 +60,7 @@ cd target/helm/repo
 unpack
 
 ```powershell
-$file = Get-ChildItem -Filter spring-6-webapp-v*.tgz | Select-Object -First 1
+$file = Get-ChildItem -Filter spring-6-webapp-chart-*.tgz | Select-Object -First 1
 tar -xvf $file.Name
 ```
 
@@ -79,19 +101,11 @@ delete all
 kubectl delete all --all -n spring-6-webapp
 ```
 
-delete all
+The actuator health endpoint is reachable via the NodePort while the app is deployed:
 
 ```powershell
-kubectl delete all --all -n kbe-brewery-order-micro-service
+curl http://localhost:30080/actuator/health
 ```
-
-create busybox sidecar
-
-```powershell
-kubectl run busybox-test --rm -it --image=busybox:1.36 --namespace=kbe-brewery-order-micro-service --command -- sh
-```
-
-You can use the actuator rest call to verify via port 30090
 
 ## Sandbox
 

@@ -1,8 +1,13 @@
+nameOverride: "@project.artifactId@"
+fullnameOverride: "@project.artifactId@"
+
 global:
   timezone: Europe/Zurich
   timezonePath: /etc/localtime
   springDebug: false
-  namespace: spring-6-webapp
+  # This value is set by Maven filtering
+  # and will be replaced with a valid version number during the build process.
+  namespace: @project.artifactId@
 
 replicaCount: 1
 
