@@ -1,0 +1,17 @@
+### authors
+< scripts/traceparent.js
+GET http://localhost:{{application-port}}/authors
+Accept: text/html
+traceparent: 00-{{traceId}}-{{spanId}}-03
+baggage: testBaggage=spring-6-webapp
+
+### books
+< scripts/traceparent.js
+GET http://localhost:{{application-port}}/books
+Accept: text/html
+traceparent: 00-{{traceId}}-{{spanId}}-03
+baggage: testBaggage=spring-6-webapp
+
+### actuator health
+GET http://localhost:{{application-port}}/actuator/health
+Accept: application/json
