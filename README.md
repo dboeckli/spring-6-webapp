@@ -109,7 +109,7 @@ curl http://localhost:30080/actuator/health
 
 ## Sandbox
 
-Development in an isolated Docker sandbox via [opencode-sandbox-kit](https://github.com/dboeckli/opencode-sandbox-kit).
+Development in an isolated Docker sandbox via [opencode-sandbox-kit](https://codeberg.org/dboeckli/opencode-sandbox-kit).
 Prerequisites: `sbx` CLI, secrets (`sbx secret set github` + `sbx secret set github-maven`), IntelliJ-MCP registration
 (`sbx mcp add idea --url http://localhost:64342/stream --skip-ssrf-check`).
 
@@ -118,8 +118,8 @@ Start (PowerShell) — multiline, with `--static-mcp idea`, the tooling image an
 
 ```powershell
 sbx run opencode `
-    --kit "git+https://github.com/dboeckli/opencode-sandbox-kit.git#dir=opencode-agent" `
-    --template docker.io/domboeckli/sbx-opencode-tooling:latest `
+    --kit "git+https://codeberg.org/dboeckli/opencode-sandbox-kit.git#dir=opencode-agent" `
+    --template docker.cloudsmith.io/dboeckli/sbx/sbx-opencode-tooling:latest `
     --skills=off `
     --static-mcp idea `
     . `
@@ -131,8 +131,8 @@ Claude variant (Home):
 
 ```powershell
 sbx run claude `
-    --kit "git+https://github.com/dboeckli/opencode-sandbox-kit.git#dir=opencode-agent" `
-    --template docker.io/domboeckli/sbx-claude-tooling:latest `
+    --kit "git+https://codeberg.org/dboeckli/opencode-sandbox-kit.git#dir=opencode-agent" `
+    --template docker.cloudsmith.io/dboeckli/sbx/sbx-claude-tooling:latest `
     --skills=off `
     --static-mcp idea `
     . `
